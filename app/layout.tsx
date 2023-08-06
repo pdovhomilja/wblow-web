@@ -1,17 +1,14 @@
-import Header from "@/components/Header";
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
-import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
-
-import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Whistleblower Online",
-  description: "Whistleblower Online",
+  title: "Wblow app",
+  description: "",
 };
 
 export default function RootLayout({
@@ -23,15 +20,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <main className="flex flex-col w-full h-screen">
-            <div>
-              <Header />
-            </div>
-            <div className="flex max-w-7xl mx-auto h-full my-5">{children}</div>
-            <div>
-              <Footer />
-            </div>
-          </main>
+          <div className="w-full h-screen">{children}</div>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

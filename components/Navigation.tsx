@@ -1,7 +1,7 @@
 import Link from "next/link";
-import React from "react";
+
+import NewAccountDialog from "./dialog/NewAccount";
 import { Button } from "./ui/button";
-import RegistrDialog from "./dialog/registr";
 
 type Props = {};
 
@@ -10,7 +10,10 @@ const Navigation = (props: Props) => {
     <div className="space-x-5">
       <Link href={"/about"}>O nás</Link>
       <Link href={"/price"}>Ceník</Link>
-      <RegistrDialog />
+      <NewAccountDialog />
+      <Button asChild>
+        <Link href={"/sign-in"}>Přihlásit</Link>
+      </Button>
     </div>
   );
 };
