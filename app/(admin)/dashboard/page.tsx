@@ -8,12 +8,14 @@ import Container from "@/components/Container";
 
 import PrivateKey from "../_components/PrivateKey";
 import LicenseTable from "../_components/LicenseTable";
+import { getActiveUsers } from "@/actions/get-active-users";
 
 const DashboardPage = async () => {
   const session = await getServerSession(authOptions);
   //console.log(session, "session");
   if (!session) return null;
   const license: any = await getLicense(session.user.id);
+  const activeUsers: any = await getActiveUsers(session.user.publicKey);
 
   return (
     <Container
@@ -27,7 +29,7 @@ const DashboardPage = async () => {
       <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
         Vaše licence
       </h2>
-      <LicenseTable license={license} />
+      <LicenseTable license={license} activeUsers={activeUsers} />
       <PrivateKey session={session} />
     </Container>
   );
