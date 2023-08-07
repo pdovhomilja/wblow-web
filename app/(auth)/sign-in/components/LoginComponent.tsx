@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -68,37 +68,27 @@ export function LoginComponent() {
     },
   });
 
-  /*   const loginWithGoogle = async () => {
-    setIsLoading(true);
-    try {
-      await signIn("google", {
-        callbackUrl: process.env.NEXT_PUBLIC_APP_URL,
-      });
-    } catch (error) {
-    } finally {
-      setIsLoading(false);
-    }
-  }; */
-
   //Login with username(email)/password
   async function onSubmit(data: BillboardFormValues) {
     setIsLoading(true);
-    const status = await signIn("credentials", {
-      redirect: false,
-      email: data.email,
-      password: data.password,
-      callbackUrl: "/",
-    });
-    setIsLoading(false);
-    //console.log(status, "status");
-    if (status?.error) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: status.error,
+    try {
+      const status = await signIn("credentials", {
+        redirect: false,
+        email: data.email,
+        password: data.password,
+        callbackUrl: "/",
       });
-    }
-    if (status?.ok) {
+      if (status?.error) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: status.error,
+        });
+      }
+    } catch (error) {
+      console.log(error, "error");
+    } finally {
+      setIsLoading(false);
       router.push("/dashboard");
     }
   }
